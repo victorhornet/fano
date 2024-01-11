@@ -11,7 +11,7 @@ pub struct Editor {
 impl Editor {
     /// Opens a new editor for the file from the given path.
     pub fn new(path: PathBuf) -> Result<Self> {
-        let text = wrt::read_file(&path)?;
+        let text = fano::read_file(&path)?;
         Ok(Self {
             input: String::new(),
             line_width: 60,
@@ -59,7 +59,7 @@ impl Editor {
         if !self.input.is_empty() {
             self.append();
         }
-        wrt::write_file(&self.path, &self.text)?;
+        fano::write_file(&self.path, &self.text)?;
         Ok(())
     }
 
