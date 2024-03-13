@@ -1,13 +1,13 @@
 # Fano
 
-Fano is a writing tool which hides old text over time.
+Fano (**Fa**ding **no**tes) is a simple writing tool in the terminal that forces you to focus only on the last few words you are writing.
 
 ## Installation
 
-From the root directory:
+Install with cargo:
 
 ```shell
-cargo install --path .
+cargo install fano
 ```
 
 ## Usage

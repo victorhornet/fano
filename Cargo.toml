@@ -2,6 +2,11 @@
 name = "fano"
 version = "0.1.0"
 edition = "2021"
+authors = ["Victor Hornet <contact@victorhornet.dev>"]
+description = "A simple writing tool in the terminal that forces you to focus only on the last few words you are writing."
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/victorhornet/fano"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
