@@ -1,5 +1,4 @@
 use crate::app::Editor;
-use itertools::Itertools;
 use ratatui::{
     prelude::*,
     widgets::{Block, Borders, Paragraph},
@@ -11,11 +10,7 @@ pub fn draw(f: &mut Frame<'_>, editor: &mut Editor) {
     let paragraph_y = height / 2 - 1;
 
     // Itertools::intersperse(editor.text.lines(), " ")
-    let mut lines = editor
-        .text
-        .lines()
-        .flat_map(|line| split_line(line, editor.line_width))
-        .collect_vec();
+    let mut lines = editor.lines();
     lines.reverse();
     lines
         .into_iter()
@@ -61,26 +56,4 @@ pub fn draw(f: &mut Frame<'_>, editor: &mut Editor) {
         Rect::new(0, height - 3, width, 2),
     );
     f.set_cursor(paragraph_x + editor.input.len() as u16, paragraph_y);
-}
-
-fn split_line(line: &str, width: u16) -> Vec<LineChunk> {
-    let line = if line.is_empty() { " " } else { line };
-    let mut line = line
-        .chars()
-        .chunks(width as usize)
-        .into_iter()
-        .map(|chunk| LineChunk {
-            text: chunk.collect(),
-            is_last: false,
-        })
-        .collect_vec();
-    if let Some(last) = line.last_mut() {
-        last.is_last = true
-    }
-    line
-}
-
-struct LineChunk {
-    pub text: String,
-    pub is_last: bool,
 }
