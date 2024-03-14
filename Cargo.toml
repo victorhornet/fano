@@ -1,6 +1,6 @@
 [package]
 name = "fano"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Victor Hornet <contact@victorhornet.dev>"]
 description = "A simple writing tool in the terminal that forces you to focus only on the last few words you are writing."
@@ -15,5 +15,5 @@ clap = { version = "4.4.14", features = ["derive"] }
 color-eyre = "0.6.2"
 crossterm = "0.27.0"
 itertools = "0.12.0"
-ratatui = "0.25.0"
+ratatui = "0.26.1"
 thiserror = "1.0.56"

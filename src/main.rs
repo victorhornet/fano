@@ -20,18 +20,20 @@ fn main() -> Result<()> {
     let file = args.file;
 
     enable_raw_mode()?;
-    let mut stdout = io::stdout();
-    execute!(stdout, EnterAlternateScreen, cursor::Hide)?;
-    let backend = CrosstermBackend::new(stdout);
+    let mut stderr = io::stderr();
+    execute!(stderr, EnterAlternateScreen, cursor::Hide)?;
+    let backend = CrosstermBackend::new(stderr);
     let mut terminal = Terminal::new(backend)?;
 
-    let mut editor = Editor::new(file)?;
+    let mut editor = Editor::new(file.clone())?;
     run_app(&mut terminal, &mut editor)?;
 
     disable_raw_mode()?;
     execute!(terminal.backend_mut(), LeaveAlternateScreen,)?;
     terminal.show_cursor()?;
-    // println!("{}", editor.text);
+    if file.is_none() {
+        println!("{}", editor.text);
+    }
     Ok(())
 }
 

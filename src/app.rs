@@ -3,16 +3,19 @@ use itertools::Itertools;
 use std::path::PathBuf;
 
 pub struct Editor {
-    pub path: PathBuf,   // the file to append to, or create if it doesn't exist
-    pub input: String,   // the next word/line to append to the file
-    pub text: String,    // the text of the file
-    pub line_width: u16, // the width of the editor
+    pub path: Option<PathBuf>, // the file to append to, or create if it doesn't exist
+    pub input: String,         // the next word/line to append to the file
+    pub text: String,          // the text of the file
+    pub line_width: u16,       // the width of the editor
 }
 
 impl Editor {
     /// Opens a new editor for the file from the given path.
-    pub fn new(path: PathBuf) -> Result<Self> {
-        let text = fano::read_file(&path)?;
+    pub fn new(path: Option<PathBuf>) -> Result<Self> {
+        let text = path
+            .as_ref()
+            .map(fano::read_file)
+            .unwrap_or(Ok(String::new()))?;
         let mut editor = Self {
             input: String::new(),
             line_width: 60,
@@ -63,7 +66,9 @@ impl Editor {
         if !self.input.is_empty() {
             self.append();
         }
-        fano::write_file(&self.path, &self.text)?;
+        if let Some(p) = &self.path {
+            fano::write_file(p, &self.text)?
+        }
         Ok(())
     }
 
